@@ -1,0 +1,15 @@
+:root {
+  --heading-font-family: "DeutscheBank Display", "DeutscheBankDisplay", Arial, sans-serif;
+  --body-font-family: "DeutscheBank Text", "DeutscheBankText", Arial, sans-serif;
+  --background-color: #ffffff;
+  --text-color: rgb(0, 0, 0);
+  --link-color: rgb(5, 80, 209);
+  --link-hover-color: rgb(3, 56, 147);
+  --db-blue: rgb(30, 42, 120);
+  --db-light-blue: rgb(5, 80, 209);
+  --db-light-gray: rgb(240, 240, 240);
+  --section-padding: 40px;
+  --nav-height: 64px;
+}
+
+html, body { overflow: auto !important; }

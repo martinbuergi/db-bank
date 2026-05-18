@@ -1,0 +1,30 @@
+.cta-button {
+  text-align: center;
+  padding: 0;
+}
+
+.cta-button > div {
+  display: flex;
+  justify-content: center;
+}
+
+main .cta-button a.button:any-link {
+  background: transparent;
+  border: 1px solid var(--link-color);
+  border-radius: 3px;
+  color: var(--link-color);
+  padding: 12px 32px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  line-height: 22px;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+main .cta-button a.button:hover {
+  background: var(--link-hover-color);
+  border-color: var(--link-hover-color);
+  color: #fff;
+  text-decoration: none;
+}

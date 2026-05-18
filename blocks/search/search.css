@@ -1,0 +1,60 @@
+.search {
+  --search-border-color: rgb(22, 24, 78);
+  --search-bg: #ffffff;
+  --search-input-height: 50px;
+  --search-border-radius: 5px;
+  --search-padding: 32px 0;
+
+  padding: var(--search-padding);
+}
+
+.search form[role="search"] {
+  display: flex;
+  width: 100%;
+  max-width: 65%;
+}
+
+@media (width < 900px) {
+  .search form[role="search"] {
+    max-width: 100%;
+  }
+}
+
+.search .search-input-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--search-input-height);
+  background: var(--search-bg);
+  border: 1px solid var(--search-border-color);
+  border-radius: var(--search-border-radius);
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.search .search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(22,24,78)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.search input[type="search"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  height: 100%;
+  padding: 0;
+}
+
+.search input[type="search"]::placeholder {
+  color: rgb(100, 100, 100);
+}
