@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#133C7F;}
+</style>
+<g id="Grid">
+</g>
+<g id="Icon">
+	<g>
+		<polygon class="st0" points="27.92,15.36 25.399,15.36 20.08,22.64 22.6,22.64 		"/>
+		<path class="st0" d="M31,12H17v14h14V12z M29.04,24.04H18.96V13.96h10.08C29.04,13.96,29.04,24.04,29.04,24.04z"/>
+		<circle class="st0" cx="24" cy="39" r="1.75"/>
+		<path class="st0" d="M36,2H12c-1.104,0-2,0.896-2,2v40c0,1.104,0.896,2,2,2h24c1.104,0,2-0.896,2-2V4C38,2.896,37.104,2,36,2z
+			 M13,4h22c0.553,0,1,0.448,1,1v28H12V5C12,4.448,12.448,4,13,4z M35,44H13c-0.552,0-1-0.448-1-1v-8h24v8
+			C36,43.552,35.553,44,35,44z"/>
+	</g>
+</g>
+</svg>
