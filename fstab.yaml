@@ -1,0 +1,4 @@
+mountpoints:
+  /:
+    url: https://content.da.live/martinbuergi/db-bank
+    type: markup
