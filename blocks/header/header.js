@@ -98,9 +98,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
     nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
@@ -109,39 +107,52 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Builds the top utility bar (segment switcher + Topangebote).
+ * Matches the original Deutsche Bank meta-navigation row.
+ * @returns {Element}
+ */
+function buildTopBar() {
+  const bar = document.createElement('div');
+  bar.className = 'nav-topbar';
+  bar.innerHTML = `
+    <div class="nav-topbar-inner">
+      <ul class="nav-topbar-segments">
+        <li class="active"><a href="/pk.html">Privatkunden</a></li>
+        <li><a href="/ub.html">Unternehmenskunden</a></li>
+        <li><a href="/vk.html">Verm&ouml;gende Kunden</a></li>
+        <li class="nav-topbar-more"><a href="https://www.deutsche-bank.de/weitere-kundensegmente.html">Weitere Kundensegmente <span class="nav-topbar-arrow">&#x203A;</span></a></li>
+      </ul>
+      <a class="nav-topbar-highlight" href="https://www.deutsche-bank.de/pk/topangebote.html">Topangebote</a>
+    </div>`;
+  return bar;
+}
+
+/**
  * Restructures a flat DA nav fragment into the expected three-section nav structure.
  * DA renders the nav as a single section with a default-content-wrapper containing
- * all nav elements: picture (brand logo), ul (main nav links), p (tools: search/login).
- * This function splits them into three separate nav-* sections.
+ * picture (brand logo), ul (main nav links), p (tools: Suche|Login|EN).
  * @param {Element} nav The nav element containing the fragment sections
  */
 function restructureFlatNav(nav) {
-  // Only apply when there's one section child (flat DA structure)
   const sections = [...nav.querySelectorAll(':scope > div.section')];
   if (sections.length !== 1) return;
 
   const wrapper = sections[0].querySelector('.default-content-wrapper');
   if (!wrapper) return;
 
-  // Check for flat nav: has an img/picture AND a ul at the same level
   const mainUl = wrapper.querySelector(':scope > ul');
   if (!mainUl) return;
 
-  // Brand: first <p> containing a picture/img
   const allPs = [...wrapper.querySelectorAll(':scope > p')];
   const brandP = allPs.find((p) => p.querySelector('picture, img'));
-
-  // Tools: last <p> (containing Suche | Login | EN links)
   const toolsP = allPs.length > 0 ? allPs[allPs.length - 1] : null;
 
-  // Create three section elements to replace the one flat section
   const brandSection = document.createElement('div');
   const sectionsSection = document.createElement('div');
   const toolsSection = document.createElement('div');
 
   if (brandP) brandSection.append(brandP);
 
-  // Wrap the ul in a default-content-wrapper so existing CSS selectors work
   const dcw = document.createElement('div');
   dcw.className = 'default-content-wrapper';
   dcw.append(mainUl);
@@ -149,7 +160,6 @@ function restructureFlatNav(nav) {
 
   if (toolsP && toolsP !== brandP) toolsSection.append(toolsP);
 
-  // Replace the single flat section with the three sections
   nav.removeChild(sections[0]);
   nav.append(brandSection, sectionsSection, toolsSection);
 }
@@ -170,7 +180,7 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  // Handle flat DA nav structure where all content is in one section
+  // Handle flat DA nav structure
   restructureFlatNav(nav);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -209,12 +219,15 @@ export default async function decorate(block) {
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+
+  // Top utility bar (Privatkunden / Unternehmenskunden etc.) — desktop only
+  const topBar = buildTopBar();
+  navWrapper.append(topBar);
   navWrapper.append(nav);
   block.append(navWrapper);
 }

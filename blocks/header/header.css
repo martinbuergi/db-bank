@@ -1,9 +1,95 @@
-/* header and nav layout */
+/* =====================================================================
+   Top utility bar (segment switcher + Topangebote)
+   Height: 40px, bg: #16184e — matches original meta-navigation row
+   ===================================================================== */
+
+.header.block .nav-topbar {
+  background-color: rgb(22, 24, 78);
+  width: 100%;
+  display: none; /* hidden on mobile */
+}
+
+@media (width >= 900px) {
+  .header.block .nav-topbar {
+    display: block;
+  }
+}
+
+.header.block .nav-topbar-inner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 40px;
+}
+
+.header.block .nav-topbar-segments {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.header.block .nav-topbar-segments li a:any-link {
+  display: block;
+  padding: 0 16px;
+  height: 40px;
+  line-height: 40px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.header.block .nav-topbar-segments li a:hover {
+  color: #fff;
+}
+
+.header.block .nav-topbar-segments li.active a:any-link {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.header.block .nav-topbar-arrow {
+  font-size: 11px;
+  margin-left: 2px;
+  display: inline-block;
+  transform: rotate(90deg);
+  vertical-align: middle;
+}
+
+.header.block .nav-topbar-highlight {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+.header.block .nav-topbar-highlight:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+/* =====================================================================
+   Main nav wrapper
+   Total header height: 40px (topbar) + 72px (nav) = 112px on desktop
+   ===================================================================== */
+
 .header.block .nav-wrapper {
   background-color: rgb(30, 42, 120);
   width: 100%;
   z-index: 2;
   position: fixed;
+  top: 0;
 }
 
 .header.block nav {
@@ -41,12 +127,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0 16px;
+    gap: 0 24px;
     max-width: 1264px;
     padding: 0 24px;
     min-height: 0;
     overflow: visible;
-    height: 64px;
+    height: 72px;
   }
 }
 
@@ -145,18 +231,20 @@
   }
 }
 
-/* brand */
+/* brand / logo */
 .header.block .nav-brand {
   grid-area: brand;
   flex-basis: 40px;
+  flex-shrink: 0;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
   line-height: 1;
 }
 
 .header.block nav .nav-brand img {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  display: block;
 }
 
 /* sections */
@@ -178,7 +266,7 @@
 .header.block nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 
 .header.block nav .nav-sections ul > li {
@@ -232,7 +320,7 @@
 
   .header.block nav .nav-sections ul {
     display: flex;
-    gap: 16px;
+    gap: 20px;
     margin: 0;
   }
 
@@ -250,40 +338,82 @@
     display: block;
     position: absolute;
     left: -24px;
-    width: 220px;
+    width: 240px;
     top: 150%;
     padding: 16px;
     background-color: #fff;
     color: #333;
     white-space: initial;
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 10;
   }
 
   .header.block nav .nav-sections .default-content-wrapper > ul > li > ul > li {
     padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .header.block nav .nav-sections .default-content-wrapper > ul > li > ul > li:last-child {
+    border-bottom: none;
   }
 
   .header.block nav .nav-sections .default-content-wrapper > ul > li > ul a:any-link {
-    color: #333;
+    color: #1a1a1a;
+    font-size: 0.875rem;
+  }
+
+  .header.block nav .nav-sections .default-content-wrapper > ul > li > ul a:hover {
+    color: rgb(5, 80, 209);
   }
 }
 
-/* tools */
+/* tools: Suche | Login | EN */
 .header.block nav .nav-tools {
   grid-area: tools;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   flex-shrink: 0;
 }
 
 .header.block nav .nav-tools p {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   white-space: nowrap;
+  margin: 0;
 }
 
 .header.block nav .nav-tools a:any-link {
   color: #fff;
+  font-weight: 400;
+}
+
+/* Login link styled as button */
+.header.block nav .nav-tools a[href*="meine.deutsche-bank"]:any-link {
+  background-color: rgb(5, 80, 209);
+  border: 1px solid rgb(5, 80, 209);
+  border-radius: 2px;
+  color: #fff;
+  padding: 6px 16px;
   font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.header.block nav .nav-tools a[href*="meine.deutsche-bank"]:hover {
+  background-color: rgb(3, 56, 147);
+  border-color: rgb(3, 56, 147);
+  text-decoration: none;
+}
+
+/* Adjust page body offset for the taller header (40px topbar + 72px nav = 112px) */
+@media (width >= 900px) {
+  :root {
+    --nav-height: 72px;
+    --topbar-height: 40px;
+    --header-height: 112px;
+  }
+
+  header {
+    height: var(--header-height);
+  }
 }
