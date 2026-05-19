@@ -109,42 +109,43 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
- * Restructures a flat DA nav fragment (picture + ul + p in one div) into
- * the expected three-section nav structure (brand, sections, tools).
- * @param {Element} nav The nav element
+ * Restructures a flat DA nav fragment into the expected three-section nav structure.
+ * DA renders the nav as a single section with a default-content-wrapper containing
+ * all nav elements: picture (brand logo), ul (main nav links), p (tools: search/login).
+ * This function splits them into three separate nav-* sections.
+ * @param {Element} nav The nav element containing the fragment sections
  */
 function restructureFlatNav(nav) {
-  const firstChild = nav.children[0];
-  if (!firstChild) return;
+  // Only apply when there's one section child (flat DA structure)
+  const sections = [...nav.querySelectorAll(':scope > div.section')];
+  if (sections.length !== 1) return;
 
-  // Detect flat structure: single div containing picture/img, ul, and p
-  const hasPicture = firstChild.querySelector(':scope > picture, :scope > p > picture, :scope > p > a > picture, :scope > p:first-child img');
-  const hasUl = firstChild.querySelector(':scope > ul');
-  const hasP = firstChild.querySelectorAll(':scope > p');
+  const wrapper = sections[0].querySelector('.default-content-wrapper');
+  if (!wrapper) return;
 
-  if (nav.children.length === 1 && hasUl) {
-    // Flat DA structure — extract into 3 sections
-    const brandSection = document.createElement('div');
-    const sectionsSection = document.createElement('div');
-    const toolsSection = document.createElement('div');
+  // Check for flat nav: has an img/picture AND a ul at the same level
+  const mainUl = wrapper.querySelector(':scope > ul');
+  if (!mainUl) return;
 
-    // Brand: first <p> containing a picture/image
-    const brandP = firstChild.querySelector('p:first-child');
-    if (brandP) brandSection.append(brandP);
+  // Brand: first <p> containing a picture/img
+  const allPs = [...wrapper.querySelectorAll(':scope > p')];
+  const brandP = allPs.find((p) => p.querySelector('picture, img'));
 
-    // Sections: the <ul>
-    const ul = firstChild.querySelector('ul');
-    if (ul) sectionsSection.append(ul);
+  // Tools: last <p> (containing Suche | Login | EN links)
+  const toolsP = allPs.length > 0 ? allPs[allPs.length - 1] : null;
 
-    // Tools: last <p> (Suche | Login | EN)
-    const allPs = [...firstChild.querySelectorAll('p')];
-    const toolsP = allPs[allPs.length - 1];
-    if (toolsP && toolsP !== brandP) toolsSection.append(toolsP);
+  // Create three section elements to replace the one flat section
+  const brandSection = document.createElement('div');
+  const sectionsSection = document.createElement('div');
+  const toolsSection = document.createElement('div');
 
-    // Replace the single div with 3 sections
-    nav.removeChild(firstChild);
-    nav.append(brandSection, sectionsSection, toolsSection);
-  }
+  if (brandP) brandSection.append(brandP);
+  sectionsSection.append(mainUl);
+  if (toolsP && toolsP !== brandP) toolsSection.append(toolsP);
+
+  // Replace the single flat section with the three sections
+  nav.removeChild(sections[0]);
+  nav.append(brandSection, sectionsSection, toolsSection);
 }
 
 /**
@@ -163,7 +164,7 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  // Handle flat DA nav structure (picture + ul + p in one div)
+  // Handle flat DA nav structure where all content is in one section
   restructureFlatNav(nav);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -211,5 +212,3 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 }
-
-// Last sync: 2026-05-19 12:52:15
