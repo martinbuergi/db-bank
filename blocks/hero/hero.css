@@ -104,7 +104,7 @@ main .hero a.button.primary:any-link:hover {
 /* Each teaser card */
 .hero > div.hero-teasers > div.hero-teaser {
   flex: 1;
-  background: rgb(22, 30, 80);
+  background: rgb(30, 42, 120);
   border-radius: 4px;
   padding: 40px 32px 40px;
   display: flex;
