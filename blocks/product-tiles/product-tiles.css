@@ -1,8 +1,7 @@
 .product-tiles {
   --tile-bg: #f0f0f0;
-  --tile-text: #0050d1;
+  --tile-text: rgb(5, 80, 209);
   --tile-gap: 8px;
-  --tile-padding: 40px 16px 32px;
   --tile-icon-size: 40px;
 
   display: grid;
@@ -17,10 +16,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding: 32px 16px 24px;
+  padding: 40px 16px 32px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
   min-height: 140px;
   box-sizing: border-box;
 }
@@ -30,7 +29,7 @@
 }
 
 .product-tiles > div > div:first-child {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .product-tiles > div > div:first-child .icon {
@@ -47,14 +46,15 @@
 .product-tiles > div > div:last-child p {
   margin: 0;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   font-family: var(--body-font-family);
+  color: var(--tile-text);
 }
 
 main .product-tiles a:any-link {
   color: var(--tile-text);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 main .product-tiles a:hover {
@@ -66,9 +66,10 @@ main .product-tiles .button-container { display: inline; }
 main .product-tiles a.button:any-link {
   background: none;
   border: none;
+  border-radius: 0;
   color: var(--tile-text);
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   padding: 0;
   margin: 0;
   text-align: left;

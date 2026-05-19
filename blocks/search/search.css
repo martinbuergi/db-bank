@@ -2,8 +2,8 @@
   --search-border-color: rgb(22, 24, 78);
   --search-bg: #ffffff;
   --search-input-height: 50px;
-  --search-border-radius: 5px;
-  --search-padding: 32px 0;
+  --search-border-radius: 3px;
+  --search-padding: 24px 0 32px;
 
   padding: var(--search-padding);
 }
@@ -11,7 +11,7 @@
 .search form[role="search"] {
   display: flex;
   width: 100%;
-  max-width: 65%;
+  max-width: 820px;
 }
 
 @media (width < 900px) {

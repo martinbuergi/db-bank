@@ -1,85 +1,99 @@
-.editorial-cards {
-  --card-bg: #f7f7f7;
-  --card-text: #16184e;
-  --card-padding: 32px;
-  --card-gap: 0;
+.editorial-cards-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
 }
 
 .editorial-cards > div {
-  display: flex;
-  flex-direction: column-reverse;
-  background: var(--card-bg);
+  position: relative;
+  overflow: hidden;
+  background: rgb(247, 247, 247);
+}
+
+/* Default (mobile): stacked with image on top */
+.editorial-cards > div > .editorial-cards-image {
+  position: relative;
+  min-height: 280px;
   overflow: hidden;
 }
 
-.editorial-cards > div > div:first-child {
-  min-height: 200px;
-}
-
-.editorial-cards > div > div:first-child picture {
+.editorial-cards > div > .editorial-cards-image picture {
   display: block;
   height: 100%;
 }
 
-.editorial-cards > div > div:first-child img {
+.editorial-cards > div > .editorial-cards-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.editorial-cards > div > div:last-child {
-  padding: var(--card-padding);
-  color: var(--card-text);
+/* Text panel */
+.editorial-cards > div > .editorial-cards-text {
+  padding: 48px 24px;
+  background: rgb(247, 247, 247);
+  color: rgb(22, 24, 78);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.editorial-cards > div > div:last-child h3 {
+.editorial-cards > div > .editorial-cards-text h3 {
   margin-top: 0;
-  font-size: var(--heading-font-size-xl);
-  font-weight: 700;
-  color: var(--card-text);
-  line-height: 1.23;
+  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 400;
+  color: rgb(22, 24, 78);
+  line-height: 1.25;
 }
 
-.editorial-cards > div > div:last-child p {
-  font-size: var(--body-font-size-s);
-  color: var(--card-text);
+.editorial-cards > div > .editorial-cards-text p {
+  font-size: var(--body-font-size-s, 16px);
+  color: rgb(22, 24, 78);
   line-height: 1.5;
+  margin-bottom: 24px;
 }
 
+/* "Mehr erfahren" button */
 main .editorial-cards a.button.secondary:any-link {
   background: transparent;
-  border: 1px solid var(--link-color);
+  border: 1px solid rgb(5, 80, 209);
   border-radius: 3px;
-  color: var(--link-color);
+  color: rgb(5, 80, 209);
   padding: 12px 32px;
-  font-size: var(--body-font-size-xs);
+  font-size: 14px;
+  font-weight: 400;
   text-decoration: none;
   display: inline-block;
   white-space: nowrap;
 }
 
 main .editorial-cards a.button.secondary:hover {
-  background: var(--link-color);
-  color: #fff;
+  background: rgba(5, 80, 209, 0.1);
+  text-decoration: none;
 }
 
 @media (width >= 900px) {
-  .editorial-cards > div {
-    flex-direction: row;
-    min-height: 500px;
+  .editorial-cards-wrapper {
+    max-width: 1230px !important;
+    margin: 0 auto !important;
+    padding: 0 32px !important;
   }
 
-  .editorial-cards > div > div:first-child {
+  .editorial-cards > div {
+    display: flex;
+    flex-direction: row;
+    min-height: 612px;
+  }
+
+  .editorial-cards > div > .editorial-cards-image {
     flex: 2;
     min-height: unset;
   }
 
-  .editorial-cards > div > div:last-child {
+  .editorial-cards > div > .editorial-cards-text {
     flex: 1;
-    padding: 48px 40px;
+    min-width: 360px;
+    padding: 48px 32px;
   }
 }

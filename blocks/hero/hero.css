@@ -1,4 +1,4 @@
-/* Hero block — full-width with background image and gradient overlay */
+/* Hero block — full-width with background image and overlay */
 
 .hero-wrapper {
   max-width: 100% !important;
@@ -7,26 +7,22 @@
 
 .hero {
   position: relative;
-  min-height: 810px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   color: #ffffff;
   overflow: hidden;
 }
 
-/* Row 1: image + headline overlay */
+/* ===== Row 1: Hero image + text overlay ===== */
 .hero > div:first-child {
   position: relative;
-  flex: 1;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 60px 24px 80px;
+  justify-content: flex-end;
+  background-color: rgb(22, 24, 78);
 }
 
-/* Background image cell — stretched behind */
-.hero > div:first-child > div:first-child {
+/* Background image cell */
+.hero > div:first-child > div.hero-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,46 +31,59 @@
   z-index: 0;
 }
 
-.hero > div:first-child > div:first-child picture,
-.hero > div:first-child > div:first-child img {
+.hero > div:first-child > div.hero-image picture {
+  display: block;
+  height: 100%;
+}
+
+.hero > div:first-child > div.hero-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  object-position: center top;
 }
 
-/* Gradient overlay via pseudo-element */
-.hero > div:first-child > div:first-child::after {
+/* Dark gradient overlay on bottom of image - so text is readable */
+.hero > div:first-child > div.hero-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(15, 48, 102, 0.6), rgba(15, 48, 102, 0.35) 60%, rgba(15, 48, 102, 0.03) 80%, rgba(15, 48, 102, 0));
+  background: linear-gradient(
+    to top,
+    rgba(22, 24, 78, 0.92) 0%,
+    rgba(22, 24, 78, 0.6) 25%,
+    rgba(22, 24, 78, 0.2) 50%,
+    transparent 75%
+  );
   pointer-events: none;
 }
 
-/* Text cell — above image */
-.hero > div:first-child > div:last-child {
+/* Text content cell — overlaid at bottom-left */
+.hero > div:first-child > div.hero-content {
   position: relative;
-  z-index: 1;
-  max-width: 500px;
+  z-index: 2;
+  padding: 40px 40px 56px;
+  max-width: 680px;
 }
 
+/* Hero h1 */
 .hero h1 {
   font-family: var(--heading-font-family);
-  font-size: 36px;
+  font-size: 56px;
   font-weight: 400;
-  line-height: 1.33;
-  margin: 0 0 24px;
+  line-height: 1.2;
+  margin: 0 0 28px;
   color: #ffffff;
 }
 
-/* CTA button - primary style */
+/* CTA button - primary blue */
 main .hero a.button.primary:any-link {
   background-color: rgb(5, 80, 209);
-  border: 1px solid rgb(5, 80, 209);
+  border: 2px solid rgb(5, 80, 209);
   border-radius: 4px;
   color: #ffffff;
-  padding: 12px 32px;
+  padding: 12px 28px;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -85,70 +94,89 @@ main .hero a.button.primary:any-link {
 main .hero a.button.primary:any-link:hover {
   background-color: rgb(3, 56, 147);
   border-color: rgb(3, 56, 147);
+  text-decoration: none;
 }
 
-/* Row 2: Teasers at the bottom */
-.hero > div:last-child {
+/* ===== Row 2: Teaser strip ===== */
+.hero > div.hero-teasers {
   position: relative;
   z-index: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  padding: 0;
+  background-color: rgb(22, 24, 78);
 }
 
 /* Each teaser cell */
-.hero > div:last-child > div {
-  flex: 1;
-  background: rgba(15, 48, 102, 0.9);
-  padding: 24px 20px;
-  border-radius: 0;
+.hero > div.hero-teasers > div.hero-teaser {
+  background: rgb(30, 42, 120);
+  padding: 28px 24px 32px;
 }
 
-.hero > div:last-child > div p {
-  margin: 0 0 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 600;
+/* Teaser title (h3 or big p) */
+.hero > div.hero-teasers > div.hero-teaser > p:first-child {
+  margin: 0 0 16px;
+  font-size: 26px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: #fff;
 }
 
-.hero > div:last-child > div a:any-link {
-  color: #ffffff;
+.hero > div.hero-teasers > div.hero-teaser > p:first-child a {
+  color: #fff;
   text-decoration: none;
+  font-size: 26px;
+  font-weight: 400;
 }
 
-.hero > div:last-child > div a:any-link:hover {
+.hero > div.hero-teasers > div.hero-teaser > p:first-child a:hover {
   text-decoration: underline;
 }
 
-/* Secondary button in teasers */
-main .hero > div:last-child a.button.secondary:any-link {
-  background: transparent;
-  border: 1px solid #ffffff;
-  border-radius: 3px;
-  color: #ffffff;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 8px;
+.hero > div.hero-teasers > div.hero-teaser p {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
 }
 
-main .hero > div:last-child a.button.secondary:any-link:hover {
-  background: rgba(255, 255, 255, 0.1);
+/* Outline (secondary) button in teasers */
+main .hero > div.hero-teasers a.button.secondary:any-link {
+  background: transparent;
+  border: 1px solid rgb(191, 213, 247);
+  border-radius: 3px;
+  color: rgb(191, 213, 247);
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+main .hero > div.hero-teasers a.button.secondary:any-link:hover {
+  background: rgba(191, 213, 247, 0.15);
+  text-decoration: none;
 }
 
 @media (width < 900px) {
-  .hero {
-    min-height: 600px;
-  }
-
-  .hero > div:last-child {
-    flex-direction: column;
-    gap: 1px;
+  .hero > div:first-child {
+    min-height: 320px;
   }
 
   .hero h1 {
-    font-size: 28px;
+    font-size: 32px;
+  }
+
+  .hero > div:first-child > div.hero-content {
+    padding: 28px 20px 40px;
+  }
+
+  .hero > div.hero-teasers {
+    grid-template-columns: 1fr;
+  }
+
+  .hero > div.hero-teasers > div.hero-teaser > p:first-child,
+  .hero > div.hero-teasers > div.hero-teaser > p:first-child a {
+    font-size: 20px;
   }
 }

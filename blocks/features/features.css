@@ -1,7 +1,7 @@
 .features {
   --features-heading-color: rgb(22, 24, 78);
   --features-icon-size: 48px;
-  --features-gap: 24px;
+  --features-gap: 32px;
 
   padding: 0;
 }
@@ -11,25 +11,56 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--features-gap);
 }
 
-.features > div > div:first-child {
+/* Icon container */
+.features > div > div.features-icon {
   display: flex;
+  align-items: center;
   justify-content: center;
+  width: var(--features-icon-size);
+  height: var(--features-icon-size);
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-bottom: 16px;
 }
 
-.features > div > div:first-child img {
+.features > div > div.features-icon picture {
+  display: block;
   width: var(--features-icon-size);
   height: var(--features-icon-size);
 }
 
+.features > div > div.features-icon img {
+  width: var(--features-icon-size);
+  height: var(--features-icon-size);
+  object-fit: contain;
+  display: block;
+}
+
+/* Also handle .icon span elements */
+.features > div > div:first-child .icon {
+  width: var(--features-icon-size);
+  height: var(--features-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features > div > div:first-child .icon img {
+  width: var(--features-icon-size);
+  height: var(--features-icon-size);
+  object-fit: contain;
+}
+
+/* Text content */
+.features > div > div.features-text h3,
 .features > div > div:last-child h3 {
   color: var(--features-heading-color);
-  font-size: var(--heading-font-size-m);
+  font-size: 26px;
   font-weight: 400;
   margin: 0;
-  margin-top: 8px;
+  line-height: 1.3;
 }
 
 @media (width >= 900px) {
@@ -37,6 +68,7 @@
     display: flex;
     gap: var(--features-gap);
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   .features > div {
