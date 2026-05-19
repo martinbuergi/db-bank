@@ -211,3 +211,5 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 }
+
+// DA flat-nav support: v2
