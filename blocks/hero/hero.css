@@ -35,8 +35,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 60px 24px 80px;
+  justify-content: flex-start;
+  padding: 140px 56px 80px;
 }
 
 /* Background image cell — stretched behind */
