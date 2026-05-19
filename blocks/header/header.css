@@ -1,12 +1,12 @@
 /* =====================================================================
-   Top utility bar (segment switcher + Topangebote)
-   Height: 40px, bg: #16184e — matches original meta-navigation row
+   Top utility bar — segment switcher + Topangebote  
+   40px, bg: rgb(22,24,78) — matches original meta-navigation
    ===================================================================== */
 
 .header.block .nav-topbar {
   background-color: rgb(22, 24, 78);
   width: 100%;
-  display: none; /* hidden on mobile */
+  display: none;
 }
 
 @media (width >= 900px) {
@@ -36,11 +36,11 @@
 
 .header.block .nav-topbar-segments li a:any-link {
   display: block;
-  padding: 0 16px;
+  padding: 0 14px;
   height: 40px;
   line-height: 40px;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 13px;
+  font-size: 12px;
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.15s;
@@ -56,21 +56,20 @@
 }
 
 .header.block .nav-topbar-arrow {
-  font-size: 11px;
-  margin-left: 2px;
+  font-size: 10px;
+  margin-left: 3px;
   display: inline-block;
-  transform: rotate(90deg);
   vertical-align: middle;
 }
 
 .header.block .nav-topbar-highlight {
   color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  padding: 6px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 2px;
 }
 
@@ -80,8 +79,9 @@
 }
 
 /* =====================================================================
-   Main nav wrapper
-   Total header height: 40px (topbar) + 72px (nav) = 112px on desktop
+   Nav wrapper — contains topbar + service bar + main nav
+   Total desktop height: 40 + 48 + 64 = 152px ... 
+   but original is 40 (meta) + 56 (service) + 56 (main) = 152px
    ===================================================================== */
 
 .header.block .nav-wrapper {
@@ -91,6 +91,63 @@
   position: fixed;
   top: 0;
 }
+
+/* =====================================================================
+   Service row — Suche | Login | EN — right-aligned, 48px
+   (maps to original .service-navigation)
+   ===================================================================== */
+
+.header.block .nav-service {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .header.block .nav-service {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 1264px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 48px;
+    gap: 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+.header.block .nav-service a:any-link {
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header.block .nav-service a:hover {
+  text-decoration: underline;
+}
+
+/* Login styled as blue button */
+.header.block .nav-service a[href*="meine.deutsche-bank"]:any-link,
+.header.block .nav-service .nav-service-login:any-link {
+  background-color: rgb(5, 80, 209);
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  padding: 6px 18px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.header.block .nav-service a[href*="meine.deutsche-bank"]:hover,
+.header.block .nav-service .nav-service-login:hover {
+  background-color: rgb(3, 56, 147);
+  text-decoration: none;
+}
+
+/* =====================================================================
+   Main nav row — logo + nav links — 64px tall
+   ===================================================================== */
 
 .header.block nav {
   box-sizing: border-box;
@@ -118,21 +175,17 @@
 }
 
 @media (width >= 900px) {
-  .header.block .nav-wrapper {
-    position: fixed;
-  }
-
   .header.block nav,
   .header.block nav[aria-expanded='true'] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0 24px;
+    gap: 0 32px;
     max-width: 1264px;
     padding: 0 24px;
     min-height: 0;
     overflow: visible;
-    height: 72px;
+    height: 64px;
   }
 }
 
@@ -195,17 +248,10 @@
   background: currentcolor;
 }
 
-.header.block nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
-}
+.header.block nav[aria-expanded='false'] .nav-hamburger-icon::before { top: -6px; }
+.header.block nav[aria-expanded='false'] .nav-hamburger-icon::after { top: 6px; }
 
-.header.block nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
-}
-
-.header.block nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
-}
+.header.block nav[aria-expanded='true'] .nav-hamburger-icon { height: 22px; }
 
 .header.block nav[aria-expanded='true'] .nav-hamburger-icon::before,
 .header.block nav[aria-expanded='true'] .nav-hamburger-icon::after {
@@ -234,7 +280,6 @@
 /* brand / logo */
 .header.block .nav-brand {
   grid-area: brand;
-  flex-basis: 40px;
   flex-shrink: 0;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
@@ -242,9 +287,11 @@
 }
 
 .header.block nav .nav-brand img {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   display: block;
+  /* SVG uses currentColor — convert to white on dark background */
+  filter: brightness(0) invert(1);
 }
 
 /* sections */
@@ -269,17 +316,9 @@
   font-size: 0.875rem;
 }
 
-.header.block nav .nav-sections ul > li {
-  font-weight: 500;
-}
-
-.header.block nav .nav-sections ul > li > ul {
-  margin-top: 0;
-}
-
-.header.block nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
-}
+.header.block nav .nav-sections ul > li { font-weight: 500; }
+.header.block nav .nav-sections ul > li > ul { margin-top: 0; }
+.header.block nav .nav-sections ul > li > ul > li { font-weight: 400; }
 
 @media (width >= 900px) {
   .header.block nav .nav-sections {
@@ -288,9 +327,7 @@
     white-space: nowrap;
   }
 
-  .header.block nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
-  }
+  .header.block nav[aria-expanded='true'] .nav-sections { align-self: unset; }
 
   .header.block nav .nav-sections .nav-drop {
     position: relative;
@@ -329,10 +366,7 @@
     position: relative;
   }
 
-  .header.block nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
-  }
+  .header.block nav .nav-sections .default-content-wrapper > ul > li > ul { display: none; }
 
   .header.block nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
     display: block;
@@ -368,7 +402,7 @@
   }
 }
 
-/* tools: Suche | Login | EN */
+/* tools — hidden on desktop (moved to service bar) */
 .header.block nav .nav-tools {
   grid-area: tools;
   font-size: 0.875rem;
@@ -388,29 +422,18 @@
   font-weight: 400;
 }
 
-/* Login link styled as button */
-.header.block nav .nav-tools a[href*="meine.deutsche-bank"]:any-link {
-  background-color: rgb(5, 80, 209);
-  border: 1px solid rgb(5, 80, 209);
-  border-radius: 2px;
-  color: #fff;
-  padding: 6px 16px;
-  font-weight: 500;
-  font-size: 0.8125rem;
+@media (width >= 900px) {
+  /* On desktop, tools row is shown in the separate service bar */
+  .header.block nav .nav-tools {
+    display: none;
+  }
 }
 
-.header.block nav .nav-tools a[href*="meine.deutsche-bank"]:hover {
-  background-color: rgb(3, 56, 147);
-  border-color: rgb(3, 56, 147);
-  text-decoration: none;
-}
-
-/* Adjust page body offset for the taller header (40px topbar + 72px nav = 112px) */
+/* Desktop header height override */
 @media (width >= 900px) {
   :root {
-    --nav-height: 72px;
-    --topbar-height: 40px;
-    --header-height: 112px;
+    --nav-height: 64px;
+    --header-height: 152px; /* 40 topbar + 48 service + 64 main */
   }
 
   header {

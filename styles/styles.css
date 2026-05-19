@@ -41,7 +41,7 @@
   /* nav height */
   --nav-height: 64px;
   --topbar-height: 0px;
-  --header-height: 64px;
+  --header-height: 64px; /* mobile */
 }
 
 /* fallback fonts */

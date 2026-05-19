@@ -1,7 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-// media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 function closeOnEscape(e) {
@@ -53,11 +52,6 @@ function focusNavSection() {
   document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
-/**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
 function toggleAllNavSections(sections, expanded = false) {
   if (!sections) return;
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
@@ -65,12 +59,6 @@ function toggleAllNavSections(sections, expanded = false) {
   });
 }
 
-/**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
@@ -78,7 +66,6 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
   if (navSections) {
     const navDrops = navSections.querySelectorAll('.nav-drop');
     if (isDesktop.matches) {
@@ -95,8 +82,6 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
       });
     }
   }
-
-  // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     window.addEventListener('keydown', closeOnEscape);
     nav.addEventListener('focusout', closeOnFocusLost);
@@ -107,9 +92,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
- * Builds the top utility bar (segment switcher + Topangebote).
- * Matches the original Deutsche Bank meta-navigation row.
- * @returns {Element}
+ * Top utility bar — segment switcher (Privatkunden etc.) + Topangebote link.
+ * Maps to original .complement-navigations / .meta-navigation (40px).
  */
 function buildTopBar() {
   const bar = document.createElement('div');
@@ -120,7 +104,7 @@ function buildTopBar() {
         <li class="active"><a href="/pk.html">Privatkunden</a></li>
         <li><a href="/ub.html">Unternehmenskunden</a></li>
         <li><a href="/vk.html">Verm&ouml;gende Kunden</a></li>
-        <li class="nav-topbar-more"><a href="https://www.deutsche-bank.de/weitere-kundensegmente.html">Weitere Kundensegmente <span class="nav-topbar-arrow">&#x203A;</span></a></li>
+        <li class="nav-topbar-more"><a href="https://www.deutsche-bank.de/weitere-kundensegmente.html">Weitere Kundensegmente <span class="nav-topbar-arrow">&#x276F;</span></a></li>
       </ul>
       <a class="nav-topbar-highlight" href="https://www.deutsche-bank.de/pk/topangebote.html">Topangebote</a>
     </div>`;
@@ -128,10 +112,37 @@ function buildTopBar() {
 }
 
 /**
- * Restructures a flat DA nav fragment into the expected three-section nav structure.
- * DA renders the nav as a single section with a default-content-wrapper containing
- * picture (brand logo), ul (main nav links), p (tools: Suche|Login|EN).
- * @param {Element} nav The nav element containing the fragment sections
+ * Service bar — Suche | Login | EN — right-aligned (48px).
+ * Maps to original .service-navigation.
+ * Extracts links from the nav's tools section if available,
+ * otherwise uses defaults.
+ * @param {Element|null} toolsSection The nav-tools div from the fragment
+ */
+function buildServiceBar(toolsSection) {
+  const bar = document.createElement('div');
+  bar.className = 'nav-service';
+
+  if (toolsSection) {
+    // Clone tools content into the service bar
+    const links = [...toolsSection.querySelectorAll('a')];
+    links.forEach((link) => {
+      const a = link.cloneNode(true);
+      if (a.href.includes('meine.deutsche-bank')) {
+        a.classList.add('nav-service-login');
+      }
+      bar.append(a);
+    });
+  } else {
+    bar.innerHTML = `
+      <a href="/pk/service-und-kontakt/kontakt/suche.html">Suche</a>
+      <a href="https://meine.deutsche-bank.de/" class="nav-service-login">Login</a>
+      <a href="https://www.deutsche-bank.de/ms/pc/home.html">EN</a>`;
+  }
+  return bar;
+}
+
+/**
+ * Restructures a flat DA nav fragment into brand/sections/tools sections.
  */
 function restructureFlatNav(nav) {
   const sections = [...nav.querySelectorAll(':scope > div.section')];
@@ -165,22 +176,19 @@ function restructureFlatNav(nav) {
 }
 
 /**
- * loads and decorates the header, mainly the nav
+ * loads and decorates the header
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
-  // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  // Handle flat DA nav structure
   restructureFlatNav(nav);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -210,7 +218,6 @@ export default async function decorate(block) {
     });
   }
 
-  // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
@@ -225,9 +232,14 @@ export default async function decorate(block) {
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
 
-  // Top utility bar (Privatkunden / Unternehmenskunden etc.) — desktop only
-  const topBar = buildTopBar();
-  navWrapper.append(topBar);
+  // 1. Top utility bar (40px): Privatkunden/Unternehmenskunden/etc + Topangebote
+  navWrapper.append(buildTopBar());
+
+  // 2. Service bar (48px): Suche | Login | EN — desktop only, right-aligned
+  const toolsSection = nav.querySelector('.nav-tools');
+  navWrapper.append(buildServiceBar(toolsSection));
+
+  // 3. Main nav (64px): Logo + nav links
   navWrapper.append(nav);
   block.append(navWrapper);
 }
