@@ -273,3 +273,8 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+/* Section headings  center-aligned to match original DB site */
+main .section > .default-content-wrapper > h2 {
+  text-align: center;
+}
