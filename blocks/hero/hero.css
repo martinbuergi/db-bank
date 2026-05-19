@@ -97,8 +97,8 @@ main .hero a.button.primary:any-link:hover {
   z-index: 1;
   display: flex;
   gap: 16px;
-  padding: 16px 24px 24px;
-  background: transparent;
+  padding: 16px 24px 32px;
+  background: rgb(22, 24, 78);
 }
 
 /* Each teaser card */
@@ -164,7 +164,7 @@ main .hero > div.hero-teasers a.button.secondary:any-link:hover {
   .hero > div.hero-teasers {
     flex-direction: column;
     gap: 8px;
-    padding: 8px 16px 16px;
+    padding: 8px 16px 24px;
   }
 
   .hero > div.hero-teasers > div.hero-teaser {
