@@ -109,6 +109,45 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Restructures a flat DA nav fragment (picture + ul + p in one div) into
+ * the expected three-section nav structure (brand, sections, tools).
+ * @param {Element} nav The nav element
+ */
+function restructureFlatNav(nav) {
+  const firstChild = nav.children[0];
+  if (!firstChild) return;
+
+  // Detect flat structure: single div containing picture/img, ul, and p
+  const hasPicture = firstChild.querySelector(':scope > picture, :scope > p > picture, :scope > p > a > picture, :scope > p:first-child img');
+  const hasUl = firstChild.querySelector(':scope > ul');
+  const hasP = firstChild.querySelectorAll(':scope > p');
+
+  if (nav.children.length === 1 && hasUl) {
+    // Flat DA structure — extract into 3 sections
+    const brandSection = document.createElement('div');
+    const sectionsSection = document.createElement('div');
+    const toolsSection = document.createElement('div');
+
+    // Brand: first <p> containing a picture/image
+    const brandP = firstChild.querySelector('p:first-child');
+    if (brandP) brandSection.append(brandP);
+
+    // Sections: the <ul>
+    const ul = firstChild.querySelector('ul');
+    if (ul) sectionsSection.append(ul);
+
+    // Tools: last <p> (Suche | Login | EN)
+    const allPs = [...firstChild.querySelectorAll('p')];
+    const toolsP = allPs[allPs.length - 1];
+    if (toolsP && toolsP !== brandP) toolsSection.append(toolsP);
+
+    // Replace the single div with 3 sections
+    nav.removeChild(firstChild);
+    nav.append(brandSection, sectionsSection, toolsSection);
+  }
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -124,6 +163,9 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
+  // Handle flat DA nav structure (picture + ul + p in one div)
+  restructureFlatNav(nav);
+
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
@@ -131,7 +173,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand ? navBrand.querySelector('.button') : null;
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
