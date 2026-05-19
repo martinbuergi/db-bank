@@ -14,18 +14,23 @@
 }
 
 /* Logo row */
-.footer-cols > div:first-child {
+.footer-cols > div.footer-cols-logo {
   margin-bottom: 32px;
 }
 
-.footer-cols > div:first-child img {
+.footer-cols > div.footer-cols-logo img {
   max-width: 300px;
   height: auto;
 }
 
-/* Contact columns container */
-.footer-cols > div:not(:first-child) {
+/* Option A: individual contact rows */
+.footer-cols > div.footer-cols-contact {
   margin-bottom: 24px;
+}
+
+/* Option B: single row with contact cells */
+.footer-cols > div.footer-cols-contact-row {
+  display: block;
 }
 
 .footer-cols h5 {
@@ -90,11 +95,17 @@ footer .footer-cols a.button:any-link:hover {
     padding: 40px 32px 32px;
   }
 
-  .footer-cols > div:first-child {
+  .footer-cols > div.footer-cols-logo {
     margin-bottom: 40px;
   }
 
-  .footer-cols .cols-grid {
+  /* Option A: individual rows become 3-col grid */
+  .footer-cols > div.footer-cols-contact {
+    display: contents; /* collapse wrapper, let grid apply to cells */
+  }
+
+  /* Option B: contact-row cells become 3-col grid */
+  .footer-cols > div.footer-cols-contact-row {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 24px;
