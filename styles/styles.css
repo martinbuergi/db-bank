@@ -85,6 +85,8 @@ body.appear {
 
 header {
   height: var(--header-height);
+  position: relative;
+  z-index: 100;
 }
 
 header .header,

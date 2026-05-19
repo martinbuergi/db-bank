@@ -87,7 +87,7 @@
 .header.block .nav-wrapper {
   background-color: rgb(30, 42, 120);
   width: 100%;
-  z-index: 2;
+  z-index: 100;
   position: fixed;
   top: 0;
 }
