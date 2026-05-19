@@ -1,4 +1,16 @@
-/* Hero block — full-width with background image and gradient overlay */
+/* Hero block — full-width with background image and overlay */
+
+/* ===== Entry animation (matches original Deutsche Bank moveUpOnPageload) ===== */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .hero-wrapper {
   max-width: 100% !important;
@@ -13,6 +25,8 @@
   justify-content: space-between;
   color: #ffffff;
   overflow: hidden;
+  /* Visible separator between nav and hero */
+  border-top: 4px solid rgb(255, 255, 255);
 }
 
 /* Row 1: image + headline overlay */
@@ -52,11 +66,13 @@
   pointer-events: none;
 }
 
-/* Text cell — above image */
+/* Text cell — above image, animated in */
 .hero > div:first-child > div:last-child {
   position: relative;
   z-index: 1;
   max-width: 500px;
+  animation: heroFadeUp 1.5s ease both;
+  animation-delay: 0.1s;
 }
 
 .hero h1 {
@@ -88,8 +104,7 @@ main .hero a.button.primary:any-link:hover {
 }
 
 /* =====================================================================
-   Row 2: Teasers — 3 dark-blue cards with bold heading + ghost button
-   Matches reference: distinct cards, gap, rounded corners, generous padding
+   Row 2: Teasers — 3 dark-blue cards, animated in after hero content
    ===================================================================== */
 
 .hero > div.hero-teasers {
@@ -99,6 +114,8 @@ main .hero a.button.primary:any-link:hover {
   gap: 16px;
   padding: 16px 24px 32px;
   background: rgb(22, 24, 78);
+  animation: heroFadeUp 1.5s ease both;
+  animation-delay: 0.3s;
 }
 
 /* Each teaser card */
