@@ -87,55 +87,73 @@ main .hero a.button.primary:any-link:hover {
   border-color: rgb(3, 56, 147);
 }
 
-/* Row 2: Teasers at the bottom */
-.hero > div:last-child {
+/* =====================================================================
+   Row 2: Teasers — 3 dark-blue cards with bold heading + ghost button
+   Matches reference: distinct cards, gap, rounded corners, generous padding
+   ===================================================================== */
+
+.hero > div.hero-teasers {
   position: relative;
   z-index: 1;
   display: flex;
-  gap: 1px;
-  padding: 0;
+  gap: 16px;
+  padding: 16px 24px 24px;
+  background: transparent;
 }
 
-/* Each teaser cell */
-.hero > div:last-child > div {
+/* Each teaser card */
+.hero > div.hero-teasers > div.hero-teaser {
   flex: 1;
-  background: rgba(15, 48, 102, 0.9);
-  padding: 24px 20px;
-  border-radius: 0;
+  background: rgb(22, 30, 80);
+  border-radius: 4px;
+  padding: 40px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
 }
 
-.hero > div:last-child > div p {
-  margin: 0 0 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 600;
+/* Heading paragraph — large, bold, white */
+.hero > div.hero-teasers > div.hero-teaser > p:first-child {
+  margin: 0 0 32px;
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-.hero > div:last-child > div a:any-link {
+.hero > div.hero-teasers > div.hero-teaser > p:first-child a:any-link {
   color: #ffffff;
   text-decoration: none;
 }
 
-.hero > div:last-child > div a:any-link:hover {
+.hero > div.hero-teasers > div.hero-teaser > p:first-child a:hover {
   text-decoration: underline;
 }
 
-/* Secondary button in teasers */
-main .hero > div:last-child a.button.secondary:any-link {
-  background: transparent;
-  border: 1px solid #ffffff;
-  border-radius: 3px;
-  color: #ffffff;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 8px;
+/* Button wrapper */
+.hero > div.hero-teasers > div.hero-teaser > p.button-wrapper {
+  margin: 0;
 }
 
-main .hero > div:last-child a.button.secondary:any-link:hover {
+/* Ghost button — white outline, white text */
+main .hero > div.hero-teasers a.button.secondary:any-link {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+main .hero > div.hero-teasers a.button.secondary:any-link:hover {
   background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }
 
 @media (width < 900px) {
@@ -143,9 +161,20 @@ main .hero > div:last-child a.button.secondary:any-link:hover {
     min-height: 600px;
   }
 
-  .hero > div:last-child {
+  .hero > div.hero-teasers {
     flex-direction: column;
-    gap: 1px;
+    gap: 8px;
+    padding: 8px 16px 16px;
+  }
+
+  .hero > div.hero-teasers > div.hero-teaser {
+    padding: 24px 20px;
+    min-height: unset;
+  }
+
+  .hero > div.hero-teasers > div.hero-teaser > p:first-child {
+    font-size: 16px;
+    margin-bottom: 20px;
   }
 
   .hero h1 {
