@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 40px 56px 56px;
+  padding: 16px 56px 56px;
 }
 
 /* Background image cell — stretched behind */
@@ -77,10 +77,10 @@
 
 .hero h1 {
   font-family: var(--heading-font-family);
-  font-size: 36px;
+  font-size: 56px;
   font-weight: 400;
-  line-height: 1.33;
-  margin: 0 0 24px;
+  line-height: 1.15;
+  margin: 0 0 28px;
   color: #ffffff;
 }
 
