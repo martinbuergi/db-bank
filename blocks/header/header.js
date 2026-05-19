@@ -140,7 +140,13 @@ function restructureFlatNav(nav) {
   const toolsSection = document.createElement('div');
 
   if (brandP) brandSection.append(brandP);
-  sectionsSection.append(mainUl);
+
+  // Wrap the ul in a default-content-wrapper so existing CSS selectors work
+  const dcw = document.createElement('div');
+  dcw.className = 'default-content-wrapper';
+  dcw.append(mainUl);
+  sectionsSection.append(dcw);
+
   if (toolsP && toolsP !== brandP) toolsSection.append(toolsP);
 
   // Replace the single flat section with the three sections
